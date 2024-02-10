@@ -8,10 +8,7 @@ from pytube import YouTube
 
 def getSongTitles(playlist, CLIENT): 
 	"""Gives the list of song titles from a Spotify playlist""" 	
-	credentials = SpotifyClientCredentials( 
-								client_id=CLIENT['ID'], 	
-								client_secret=CLIENT['SECRET']
-	) 
+	credentials = SpotifyClientCredentials(client_id=CLIENT['ID'], 	client_secret=CLIENT['SECRET']) 
 	
 	session = Spotify(client_credentials_manager=credentials)  
     
@@ -48,25 +45,24 @@ def download(links, output_path=None):
 		   yt = YouTube(link) 
 		   audio = yt.streams.filter(only_audio=True).first()
 		except Exception as e: 
-			print(e) 
-			print(f'video link: {link}')  
+		   print(e) 
+		   print(f'video link: {link}')  
 		else: 
-	   	  print(f'Downloading: {yt.title}')
-	   	  audio.download(output_path) 
+	   	   print(f'Downloading: {yt.title}')
+	   	   audio.download(output_path) 
 	   	     	
 	print('Download complete.')
 
 
 
 if __name__ == '__main__':  
-	"""Getting the Spotify playlist link and downloading the audios 	from YouTube""" 
+	"""Getting the Spotify playlist link and downloading the audios from YouTube""" 
 	
 	playlist_link = input('Enter the playlist link: ')    
 	output_path = 'playlist' 
 	CLIENT = dotenv_values('.env')
 	
-	if match := re.match(r"https://open.spotify.com/playlist/(.*)\?",
-	playlist_link):
+	if match := re.match(r"https://open.spotify.com/playlist/(.*)\?", playlist_link):
 		playlist = match.groups()[0]
 	else:
 	    raise ValueError("Expected format: https://open.spotify.com playlist/...") 
